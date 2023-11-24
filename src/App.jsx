@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Accounts, Grounds, Home } from './pages'
+import { Accounts, ForgotPassword, Grounds, Home, Login, Registration } from './pages'
 
 
 function App() {
@@ -13,6 +13,9 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/grounds' element={<Grounds />} />
           <Route path='/accounts' element={<Accounts />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/registration' element={<Registration />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
         </Routes>
       </BrowserRouter>
       
