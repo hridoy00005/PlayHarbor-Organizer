@@ -1,8 +1,16 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import auth from "./authReducer"
+import storage from "redux-persist/lib/storage";
+import { REHYDRATE, persistReducer } from "redux-persist";
+import authSlice from "./authReducer";
+
+const persistConfig = {
+  key: authSlice.name,
+  storage,
+  REHYDRATE,
+};
 
 const rootReducers = combineReducers({
-    auth,
-})
+  [authSlice.name]: persistReducer(persistConfig, authSlice.reducer),
+});
 
 export default rootReducers;

@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MasterButton from "../components/shared/MasterButton";
 import { MasterInput } from "../components/shared";
+import { api, auth } from "../api";
+import { useDispatch } from "react-redux";
+import { loginReducer } from "../store/reducers/authReducer";
 
 const Login = () => {
   const [credential, setCredential] = useState({
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,14 +22,22 @@ const Login = () => {
 
   const onSubmit = async () => {
     try {
-    } catch (error) {}
+      const res = await api.post(auth.login, credential);
+      console.log(res.msg);
+      if(res.success){
+        dispatch(loginReducer({user: res?.user, token:res?.token}))
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const disabled = !credential.email || !credential.password;
 
   return (
     <div className="bg-gray-200 min-h-screen flex justify-center items-center">
-      <form className="col-start-2 my-5 w-[33%]">
+      <div className="col-start-2 my-5 w-[33%]">
         <h2 className="bg-gray-700 text-white text-2xl md:text-3xl text-center py-4 font-semibold rounded-t-lg">
           Login Form
         </h2>
@@ -68,7 +82,7 @@ const Login = () => {
             Create New Account
           </Link>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

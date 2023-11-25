@@ -1,24 +1,25 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Accounts, ForgotPassword, Grounds, Home, Login, Registration, ResetPassword } from './pages'
+import { Account, ForgotPassword, Grounds, Home, Login, Registration, ResetPassword } from './pages'
+import MainRouter from './routes/MainRouter'
 
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/grounds' element={<Grounds />} />
-          <Route path='/accounts' element={<Accounts />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/registration' element={<Registration />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
-        </Routes>
-      </BrowserRouter>
+    <MainRouter />
+      // <BrowserRouter>
+      //   <Routes>
+      //     <Route path='/' element={<Home />} />
+      //     <Route path='/grounds' element={<Grounds />} />
+      //     <Route path='/account' element={<Account />} />
+      //     <Route path='/login' element={<Login />} />
+      //     <Route path='/registration' element={<Registration />} />
+      //     <Route path='/forgot-password' element={<ForgotPassword />} />
+      //     <Route path='/reset-password' element={<ResetPassword />} />
+      //   </Routes>
+      // </BrowserRouter>
       
     
   )

@@ -22,6 +22,7 @@ const Registration = () => {
   const onRegister = async () => {
     try {
       const res = await api.post(auth.registration, sellerData);
+      console.log(res.msg);
       if(res.success){
         navigate('/login');
       }

@@ -15,6 +15,7 @@ const authSlice = createSlice({
       state.token = token;
       state.user = user;
       state.isAuthenticate = true;
+      console.log(state.isAuthenticate);
     },
 
     logoutreducer: (state) => {
@@ -25,5 +26,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { actions } = authSlice;
-export default authSlice.reducer;
+export const { loginReducer, logoutreducer } = authSlice.actions;
+export default authSlice;
