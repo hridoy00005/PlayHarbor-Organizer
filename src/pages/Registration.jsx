@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { MasterButton, MasterInput } from "../components/shared";
+import { api, auth } from "../api";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [sellerData, setSellerData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     phone: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,12 +21,17 @@ const Registration = () => {
 
   const onRegister = async () => {
     try {
-    } catch (error) {}
+      const res = await api.post(auth.registration, sellerData);
+      if(res.success){
+        navigate('/login');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const disabled =
-    !sellerData.firstName ||
-    !sellerData.lastName ||
+    !sellerData.name ||
     !sellerData.phone ||
     !sellerData.email ||
     !sellerData.password ||
@@ -31,30 +39,22 @@ const Registration = () => {
 
   return (
     <div className="bg-gray-200 min-h-screen grid grid-cols-1 md:grid-cols-3">
-      <form className="col-start-2 my-5 ">
+      <div className="col-start-2 my-5 ">
         <h2 className="bg-gray-700 text-white text-2xl md:text-3xl text-center py-4 font-semibold rounded-t-lg">
           Registration Form
         </h2>
 
         <div className="shadow-lg rounded-lg p-5">
           <MasterInput
-            label="First Name"
+            label="Name"
             type="text"
-            placeholder="Enter First Name"
+            placeholder="Enter Your Name"
             className="master-input mb-2"
-            name="firstName"
-            value={sellerData.firstName}
+            name="name"
+            value={sellerData.name}
             onChange={handleChange}
           />
-          <MasterInput
-            label="Last Name"
-            type="text"
-            placeholder="Enter Last Name"
-            className="master-input mb-2"
-            name="lastName"
-            value={sellerData.lastName}
-            onChange={handleChange}
-          />
+         
           <MasterInput
             label="Phone"
             type="number"
@@ -99,7 +99,7 @@ const Registration = () => {
             disabled={disabled}
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 };

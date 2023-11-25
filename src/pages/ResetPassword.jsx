@@ -22,7 +22,7 @@ const ResetPassword = () => {
   const disabled = !resetPassword.newPassword || !resetPassword.confirmPassword;
 
   return (
-    <div className=" w-full h-screen flex items-center justify-center bg-gray-200">
+    <div className=" w-full h-screen flex items-center justify-center bg-blue-700">
       <div className="border w-[70%] md:w-[40%] rounded-lg shadow">
         <h2 className="bg-gray-400 bg-opacity-30 text-white text-2xl md:text-3xl text-center py-4 font-semibold rounded-t-lg">
           Reset Password
