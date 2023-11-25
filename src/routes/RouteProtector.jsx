@@ -10,11 +10,9 @@ export const AuthRoute = ({ element }) => {
 };
 
 export const PrivateRoute = ({ element }) => {
-  const { isAuthenticate, user } = useSelector((state) => state.auth);
+  const { isAuthenticate } = useSelector((state) => state.auth);
 
   if (!isAuthenticate) {
     return <Navigate to={"/login"} />;
-  } else if (user.verified) {
-    return element;
-  } else return <Navigate to={"/profile"} />;
+  } else return element;
 };

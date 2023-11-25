@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { authRoutes, privateRoutes, publicRoutes } from "./routes";
 import { NotFound } from "../pages";
 import { AuthRoute, PrivateRoute } from "./RouteProtector";
+import LayoutHome from "../components/layouts/LayoutHome";
 
 const MainRouter = () => {
   return (
@@ -10,7 +11,7 @@ const MainRouter = () => {
       <Routes>
         {/* Public Routes */}
         {publicRoutes.map(({ path, element }, idx) => (
-          <Route key={idx} path={path} element={element} />
+          <Route key={idx} path={path} element={<LayoutHome>{element}</LayoutHome>} />
         ))}
 
         {/* All Auth Routes */}
