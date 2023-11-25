@@ -2,9 +2,9 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://192.168.1.125:5000/";
 
-const token = JSON.parse(
-  JSON.parse(localStorage?.getItem("persist:auth") || '""').token || ""
-);
+const localStorageData = localStorage?.getItem("persist:auth") || '""';
+const parsedData = JSON.parse(localStorageData);
+const token = parsedData?.token || "";
 
 class ApiConfigaration {
   constructor() {
