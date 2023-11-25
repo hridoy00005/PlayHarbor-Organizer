@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Accounts, ForgotPassword, Grounds, Home, Login, Registration } from './pages'
+import { Accounts, ForgotPassword, Grounds, Home, Login, Registration, ResetPassword } from './pages'
 
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/registration' element={<Registration />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
       

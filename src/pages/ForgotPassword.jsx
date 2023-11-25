@@ -49,7 +49,7 @@ const ForgotPassword = () => {
             label="Enter Your Email For Verification"
             type="email"
             placeholder="Enter Your Email"
-            className="master-input mt-2 mb-3"
+            className="master-input mt-2 mb-"
             name="email"
             value={forgotpassword.email}
             onChange={onChange}
