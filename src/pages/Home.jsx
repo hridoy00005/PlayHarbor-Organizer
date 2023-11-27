@@ -1,31 +1,22 @@
 import React from "react";
-import LayoutHome from "../components/layouts/LayoutHome";
 
 const Home = () => {
   return (
-    <LayoutHome>
+    <div>
       <h1 className="text-4xl text-center">WA : WI This is div</h1>
+      <br />
       <p className="font-normal ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ipsam
         consectetur voluptatum ipsum omnis quia odio eveniet enim natus
         quibusdam!
       </p>
-      <p className="font-normal ">
+      <br />
+      <p className="font-medium ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ipsam
         consectetur voluptatum ipsum omnis quia odio eveniet enim natus
         quibusdam!
       </p>
-      <p className="font-normal ">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ipsam
-        consectetur voluptatum ipsum omnis quia odio eveniet enim natus
-        quibusdam!
-      </p>
-      <p className="font-normal ">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ipsam
-        consectetur voluptatum ipsum omnis quia odio eveniet enim natus
-        quibusdam!
-      </p>
-    </LayoutHome>
+    </div>
   );
 };
 

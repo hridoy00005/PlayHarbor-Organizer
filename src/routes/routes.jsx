@@ -5,6 +5,7 @@ import {
   Grounds,
   Home,
   Login,
+  MyGrounds,
   Profile,
   Registration,
   ResetPassword,
@@ -27,6 +28,7 @@ export const authRoutes = [
 
 export const privateRoutes = [
   { path: "/account", element: <Account /> },
-  { path: "/createGround", element: <CreateGround /> },
+  { path: "/my-grounds", element: <MyGrounds /> },
+  { path: "/create-ground", element: <CreateGround /> },
   { path: "/profile", element: <Profile /> },
 ];

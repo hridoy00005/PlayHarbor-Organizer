@@ -15,7 +15,6 @@ const authSlice = createSlice({
       state.token = token;
       state.user = user;
       state.isAuthenticate = true;
-      console.log(state.isAuthenticate);
     },
 
     logoutreducer: (state) => {

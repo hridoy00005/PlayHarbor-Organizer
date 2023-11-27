@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const LayoutHome = ({ children }) => {
+  const {isAuthenticate} = useSelector(state=>state.auth);
   return (
     <div className="bg-gray-200 min-h-screen">
       {/* Navbar Section */}
@@ -15,13 +17,13 @@ const LayoutHome = ({ children }) => {
             <Link to="/grounds">Grounds</Link>
           </li>
           <li className="hover:bg-gray-700 hover:text-sky-400 p-5">
-            <Link to="/account">Are You Buyer?</Link>
+            <Link to="/account">{isAuthenticate?"Account":"Are You Buyer?"}</Link>
           </li>
         </ul>
       </nav>
 
       {/* Children Home */}
-      <div className="min-h-screen text-center">{children}</div>
+      <div className="min-h-[78.6vh] text-center">{children}</div>
 
       {/* Footer Section */}
       <footer className="text-white text-sm bg-gray-800 py-5 tracking-wide">

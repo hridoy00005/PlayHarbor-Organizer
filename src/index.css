@@ -15,6 +15,7 @@
   .master-input {
     @apply w-full py-2 px-3 border shadow rounded-lg focus:outline-none;
   }
+
 }
 
 body {

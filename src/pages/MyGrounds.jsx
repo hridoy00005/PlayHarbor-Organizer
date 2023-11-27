@@ -2,8 +2,8 @@ import React from "react";
 import LayoutDashboard from "../components/layouts/LayoutDashboard";
 import { PageTitle } from "../components/sidebar";
 
-const CreateGround = () => {
-  return <PageTitle title="Create Ground" />;
+const MyGrounds = () => {
+  return <PageTitle title="My Grounds" />;
 };
 
-export default CreateGround;
+export default MyGrounds;

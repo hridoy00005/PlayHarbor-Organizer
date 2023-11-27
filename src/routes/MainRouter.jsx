@@ -4,6 +4,7 @@ import { authRoutes, privateRoutes, publicRoutes } from "./routes";
 import { NotFound } from "../pages";
 import { AuthRoute, PrivateRoute } from "./RouteProtector";
 import LayoutHome from "../components/layouts/LayoutHome";
+import LayoutDashboard from "../components/layouts/LayoutDashboard";
 
 const MainRouter = () => {
   return (
@@ -28,7 +29,7 @@ const MainRouter = () => {
           <Route
             key={idx}
             path={path}
-            element={<PrivateRoute element={element} />}
+            element={<PrivateRoute element={<LayoutDashboard>{element}</LayoutDashboard>} />}
           />
         ))}
 
