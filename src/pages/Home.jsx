@@ -3,7 +3,7 @@ import React from "react";
 const Home = () => {
   return (
     <div>
-      <h1 className="text-4xl text-center">WA : WI This is div</h1>
+      <h1 className="text-4xl text-center">WA : WI This is Home</h1>
       <br />
       <p className="font-normal ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ipsam

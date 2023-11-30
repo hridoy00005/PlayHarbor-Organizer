@@ -50,7 +50,7 @@ const Registration = () => {
             label="Name"
             type="text"
             placeholder="Enter Your Name"
-            className="master-input mb-2"
+            className="master-input mb-2 w-full"
             name="name"
             value={sellerData.name}
             onChange={handleChange}
@@ -60,7 +60,7 @@ const Registration = () => {
             label="Phone"
             type="number"
             placeholder="Enter Phone"
-            className="master-input mb-2"
+            className="master-input mb-2 w-full"
             name="phone"
             value={sellerData.phone}
             onChange={handleChange}
@@ -69,7 +69,7 @@ const Registration = () => {
             label="Email"
             type="email"
             placeholder="Enter Email"
-            className="master-input mb-2"
+            className="master-input mb-2 w-full"
             name="email"
             value={sellerData.email}
             onChange={handleChange}
@@ -78,7 +78,7 @@ const Registration = () => {
             label="Password"
             type="password"
             placeholder="Enter Password"
-            className="master-input mb-2"
+            className="master-input mb-2 w-full"
             name="password"
             value={sellerData.password}
             onChange={handleChange}
@@ -87,7 +87,7 @@ const Registration = () => {
             label="Confirm Password"
             type="password"
             placeholder="Enter Same Password"
-            className="master-input mb-2"
+            className="master-input mb-2 w-full"
             name="confirmPassword"
             value={sellerData.confirmPassword}
             onChange={handleChange}

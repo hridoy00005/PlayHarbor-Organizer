@@ -46,7 +46,7 @@ const Login = () => {
             label="Email"
             type="email"
             placeholder="Enter Email"
-            className="master-input mb-2"
+            className="master-input mb-2 w-full"
             name="email"
             value={credential.email}
             onChange={handleChange}
@@ -56,7 +56,7 @@ const Login = () => {
             label="Password"
             type="password"
             placeholder="Enter Password"
-            className="master-input"
+            className="master-input w-full"
             name="password"
             value={credential.password}
             onChange={handleChange}

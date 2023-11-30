@@ -32,7 +32,7 @@ const ResetPassword = () => {
             label="New Password"
             type="password"
             placeholder="Enter New Password"
-            className="master-input mt-2 mb-3 bg-transparent"
+            className="master-input mt-2 mb-3 w-full bg-transparent"
             name="newPassword"
             value={resetPassword.newPassword}
             onChange={onChange}
@@ -42,7 +42,7 @@ const ResetPassword = () => {
             label="Confirm New Password"
             type="password"
             placeholder="Confirm New Password"
-            className="master-input mt-2 mb-3 bg-transparent"
+            className="master-input mt-2 mb-3 w-full bg-transparent"
             name="confirmPassword"
             value={resetPassword.confirmPassword}
             onChange={onChange}

@@ -15,32 +15,40 @@ const LayoutDashboard = ({ children }) => {
     <div className="min-h-screen relative">
       {/* <img src={image} alt="bg img" className="h-full w-full fixed" /> */}
       <div
-        className="w-full h-screen fixed inset-0 bg-black bg-opacity-70"
-        style={{
-          background: "url('/auth-bg.jpg')",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
+        className="w-full h-screen fixed inset-0 bg-black bg-opacity-70 bg-[url('/auth-bg.jpg')] bg-center bg-cover"
+        // style={{
+        //   background: "url('/auth-bg.jpg')",
+        //   backgroundPosition: "center",
+        //   backgroundSize: "cover",
+        // }}
       ></div>
       <div className="w-full h-screen fixed inset-0 bg-black bg-opacity-20"></div>
 
       <div className="relative">
         {/* Navbar Section */}
-        <nav className="flex justify-between px-10 bg-gray-900 bg-opacity-30  text-white tracking-wider">
+        <nav className="flex justify-between px-3 w-full bg-gray-900 bg-opacity-30  text-white tracking-wider">
           <div className="py-3 cursor-pointer text-2xl font-bold">Logo</div>
-          <ul className="flex font-semibold cursor-pointer">
-            <li className="backdrop-blur-sm bg-black bg-opacity-20 hover:bg-gray-900 hover:bg-opacity-30 border-x-2 border-transparent hover:border-x-2 hover:border-gray-300 hover:text-sky-400 p-5">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="backdrop-blur-sm bg-black bg-opacity-20 hover:bg-gray-900 hover:bg-opacity-30 border-x-2 border-transparent hover:border-x-2 hover:border-gray-300 hover:text-sky-400 p-5">
-              <Link to="/grounds">Grounds</Link>
-            </li>
-            <li className="backdrop-blur-sm bg-black bg-opacity-20 hover:bg-gray-900 hover:bg-opacity-30 border-x-2 border-transparent hover:border-x-2 hover:border-gray-300 hover:text-sky-400 p-5">
-              <Link to="" onClick={handlLogout}>
-                Logout
-              </Link>
-            </li>
-          </ul>
+          <div className="flex font-semibold cursor-pointer rounded-l-lg rounded-r-lg">
+            <Link
+              to="/"
+              className="backdrop-blur-sm bg-black bg-opacity-20 hover:bg-gray-900 hover:bg-opacity-30 border-x-2 border-transparent hover:border-x-2 hover:border-gray-300 hover:text-sky-400 p-5  rounded-l-lg"
+            >
+              Home
+            </Link>
+            <Link
+              to="/grounds"
+              className="backdrop-blur-sm bg-black bg-opacity-20 hover:bg-gray-900 hover:bg-opacity-30 border-x-2 border-transparent hover:border-x-2 hover:border-gray-300 hover:text-sky-400 p-5"
+            >
+              Grounds
+            </Link>
+            <Link
+              to=""
+              onClick={handlLogout}
+              className="backdrop-blur-sm bg-black bg-opacity-20 hover:bg-gray-900 hover:bg-opacity-30 border-x-2 border-transparent hover:border-x-2 hover:border-gray-300 hover:text-sky-400 p-5  rounded-r-lg"
+            >
+              Logout
+            </Link>
+          </div>
         </nav>
 
         <div className="grid grid-cols-6">
