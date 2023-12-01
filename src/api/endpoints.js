@@ -4,3 +4,7 @@ export const auth = {
     forgetPass:"/auth/forgetPass",
     resetPass:"/auth/resetPass",
 }
+
+export const sportType = {
+    getSportType:"/sportType"
+}

@@ -53,8 +53,8 @@ const LayoutDashboard = ({ children }) => {
 
         <div className="grid grid-cols-6">
           <Sidebar />
-          <div className="col-span-5 py-3 p-3">
-            <div className="bg-black bg-opacity-50 backdrop-blur-sm text-gray-300 min-h-[85vh] p-2 rounded-lg">
+          <div className="col-span-6 md:col-span-5 p-3">
+            <div className="bg-black bg-opacity-50 backdrop-blur-sm text-gray-300 min-h-[85vh] p-5 md:p-2 rounded-lg">
               {children}
             </div>
           </div>

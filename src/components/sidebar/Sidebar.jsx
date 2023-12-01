@@ -13,7 +13,7 @@ const Sidebar = () => {
     !user.verified && navigate("/profile");
   }, [location.path]);
   return (
-    <div className="col-span-1 ml-2">
+    <div className="hidden md:block col-span-1 ml-2">
       {sidebarMenu.map((menu) => (
         <div
           key={menu.path}
