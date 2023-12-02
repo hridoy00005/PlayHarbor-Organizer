@@ -1,45 +1,79 @@
 import React, { useEffect, useState } from "react";
 import { MasterButton, MasterInput } from "../shared";
-import { Input, Select, Upload } from "antd";
+import { Divider, Input, Select, TimePicker, Upload } from "antd";
 import { api } from "../../api";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import districts from "../../utils/geo_bd/districts.json";
+import upazila from "../../utils/geo_bd/upazila.json";
 
-const GroundForm = ({state, setState, fileList, setFilelist }) => {
+const GroundForm = ({ state, setState, images = [] }) => {
   const { TextArea } = Input;
-
-  const [sportTypeList, setSportTypeList] = useState([]);
-
-  const handleChange = ({ fileList: newFilelist }) => {
-    setFilelist(newFilelist);
+  const { token } = useSelector((state) => state.auth);
+  const [fileList, setFileList] = useState([]);
+  const [groundState, setGroundState] = useState({
+    name: "",
+    sportType: "",
+    images: "",
+    size: "",
+    surface: "",
+    openingTime: "",
+    closingTime: "",
+    price: "",
+  });
+  // Location State
+  const [location, setLocation] = useState({
+    district: "",
+    upazila: "",
+    address: "",
+  });
+  //Filtered Upazilas State
+  const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  
+  // Image List Addition
+  const handleChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    fileList.forEach((file) => {
+      images.push(file?.response?.url);
+    });
   };
 
-  const fetchTypeList = async()=>{
-    try {
-      const res = await api.get(sportType.getSportType);
-      setSportTypeList(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // District
+  const handleDistrict = (name) => {
+    setLocation({...location, district:name});
+    const {id} = districts.find((ds)=>(ds.name===name));//Problem...
+    const filteredUpazilas = upazila.filter(up=>up.district_id === id);
+    setFilteredUpazilas(filteredUpazilas);
+  };
 
-  useEffect(()=>{fetchTypeList},[]);
+  // Upazila
+  const handleUpazila = (id) => {
+    setLocation({...location, upazila:id})
+  };
+
+  //Time Changing
+  const onTimechange = (time) => {
+    setGroundState({
+      ...groundState,
+      openingTime: dayjs(time[0]).valueOf(),
+      closingTime: dayjs(time[1]).valueOf(),
+    });
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div>
         <h2 className="text-lg text-white font-semibold">Sport Type</h2>
         <Select
-          onChange={(value) => setState({ ...state, sportType_id: value })}
-          value={state.sportType_id}
+          // onChange={(value) => setState({ ...state, sportType_id: value })}
+          // value={state.sportType_id}
           className="w-full"
           size="large"
           placeholder="Select Type"
-        >
-          {sportTypeList.map((ct) => (
-            <Select.Option key={ct?.id}>{ct?.name}</Select.Option>
-          ))}
-        </Select>
+        ></Select>
       </div>
 
+      {/* Price */}
       <div>
         <h2 className="text-lg text-white font-semibold">Price</h2>
         <MasterInput
@@ -59,6 +93,7 @@ const GroundForm = ({state, setState, fileList, setFilelist }) => {
         /> */}
       </div>
 
+      {/* Status */}
       <div>
         <h2 className="text-lg text-white font-semibold">Status</h2>
         <Select
@@ -98,6 +133,8 @@ const GroundForm = ({state, setState, fileList, setFilelist }) => {
           />
         </div>
       </div>
+
+      {/* Surface */}
       <div>
         <h2 className="text-lg text-white font-semibold">Surface</h2>
         <Select
@@ -106,7 +143,7 @@ const GroundForm = ({state, setState, fileList, setFilelist }) => {
           className="w-full bg-transparent"
           size="large"
           placeholder="Select Type"
-          style={{ backgroundColor: 'transparent' }}
+          style={{ backgroundColor: "transparent" }}
         >
           {/* {cateogryList.map((ct) => (
             <Select.Option key={ct?.id}>{ct?.name}</Select.Option>
@@ -114,41 +151,25 @@ const GroundForm = ({state, setState, fileList, setFilelist }) => {
         </Select>
       </div>
 
+      {/* Time Duration */}
       <div>
         <h2 className="text-lg text-white font-semibold">Time Duration</h2>
-        <div className="grid grid-cols-2 gap-10 justify-between">
-          <MasterInput
-            // label="Size"
-            type="text"
-            placeholder="Openning Time"
-            className="master-input w-full bg-transparent"
-            name="onpeningTime"
-            // value={forgotpassword.email}
-            // onChange={onChange}
-          />
-          <MasterInput
-            // label="Size"
-            type="text"
-            placeholder="Closing Time"
-            className="master-input w-full"
-            name="closingTime"
-            // value={forgotpassword.email}
-            // onChange={onChange}
+        <div className="grid grid-cols-1">
+          <TimePicker.RangePicker
+            size="large"
+            format="HH a"
+            onChange={onTimechange}
           />
         </div>
       </div>
 
-      <div>
-        <h2 className="text-lg text-white font-semibold">Adress</h2>
-        <TextArea rows={4} />
-      </div>
-
+      {/* Image Addition */}
       <div className="  ">
         <h2 className="text-lg text-white font-semibold">Add Images</h2>
         {fileList.lenght >= 3 ? null : (
           <Upload
-            // action="http://localhost:8000/api/file-upload"
-            // headers={{ Authorization: `Bearer ` + token }}
+            action="http://localhost:5000/file-upload"
+            headers={{ Authorization: `Bearer ` + token }}
             listType="picture-card"
             fileList={fileList}
             onChange={handleChange}
@@ -166,6 +187,48 @@ const GroundForm = ({state, setState, fileList, setFilelist }) => {
             </div>
           </Upload>
         )}
+      </div>
+
+      <div className="h-[1px] bg-white col-span-2"></div>
+
+      {/* Location */}
+      <h2 className="text-2xl text-white font-semibold col-span-2">Location</h2>
+   
+      {/* Select Zila */}
+      <div className="col-span-1">
+        <h2 className="text-lg text-white font-semibold">District</h2>
+        <Select
+          onChange={handleDistrict}
+          value={location.district}
+          className="w-full"
+          size="large"
+          placeholder="Select Type"
+        >
+          {districts.map((ds) => (
+            <Select.Option key={ds?.id}>{ds?.name}</Select.Option>
+          ))}
+        </Select>
+      </div>
+
+      {/* Select Upazila */}
+      <div className="col-span-1">
+        <h2 className="text-lg text-white font-semibold">Upazila</h2>
+        <Select
+          onChange={handleUpazila}
+          value={location.upazila}
+          className="w-full"
+          size="large"
+          placeholder="Select Type"
+        >
+          {filteredUpazilas.map((upz) => (
+            <Select.Option key={upz?.id}>{upz?.name}</Select.Option>
+          ))}
+        </Select>
+      </div>
+
+      <div>
+        <h2 className="text-lg text-white font-semibold">Address</h2>
+        <TextArea rows={4} />
       </div>
     </div>
   );

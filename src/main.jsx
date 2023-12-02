@@ -5,11 +5,14 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store, { persistor } from "./store/index.js";
 import { PersistGate } from "redux-persist/integration/react";
+import { ConfigProvider } from "antd";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <App />
+      <ConfigProvider theme={{token:{fontFamily:"Oswald"}}}>
+        <App />
+      </ConfigProvider>
     </PersistGate>
   </Provider>
 );
