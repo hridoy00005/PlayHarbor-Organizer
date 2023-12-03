@@ -14,7 +14,3 @@ export const createGround = {
     createGround:"/create-ground"
 }
 
-
-export const sportType = {
-    getSportType:"/sportType"
-}

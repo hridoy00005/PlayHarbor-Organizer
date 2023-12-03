@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MasterInput } from "../shared";
+import { MasterInput, MasterSelect } from "../shared";
 import { Input, Select, TimePicker, Upload } from "antd";
 // import { api } from "../../api";
 import { useSelector } from "react-redux";
@@ -15,21 +15,21 @@ const GroundForm = ({ state, setState, images = [] }) => {
     name: "",
     sportType: "",
     images: "",
-    size: "",
-    surface: "",
+    // size: "",
+    // surface: "",
     openingTime: "",
     closingTime: "",
     price: "",
   });
   // Location State
   const [location, setLocation] = useState({
-    district: "",
-    upazila: "",
+    // district: "",
+    // upazila: "",
     address: "",
   });
   //Filtered Upazilas State
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
-  
+
   // Image List Addition
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -40,15 +40,15 @@ const GroundForm = ({ state, setState, images = [] }) => {
 
   // District
   const handleDistrict = (name) => {
-    setLocation({...location, district:name});
-    const {id} = districts.find((ds)=>(ds.name===name));//Problem...
-    const filteredUpazilas = upazila.filter(up=>up.district_id === id);
+    setLocation({ ...location, district: name });
+    const { id } = districts.find((ds) => ds.name === name); //Problem...
+    const filteredUpazilas = upazila.filter((up) => up.district_id === id);
     setFilteredUpazilas(filteredUpazilas);
   };
 
   // Upazila
   const handleUpazila = (id) => {
-    setLocation({...location, upazila:id})
+    setLocation({ ...location, upazila: id });
   };
 
   //Time Changing
@@ -62,94 +62,127 @@ const GroundForm = ({ state, setState, images = [] }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {/* Name */}
+      <MasterInput
+        label="Ground Name"
+        type="text"
+        placeholder="Name"
+        className="master-input w-full"
+        value={groundState.name}
+        onChange={(e) =>
+          setGroundState({ ...groundState, name: e.target.value })
+        }
+      />
+
+      {/* Sport Types */}
+      <MasterSelect
+        label="Sport Type"
+        placeholder="Select Sport Type"
+        options={["Cricket", "Football", "Badminton"]}
+        state={groundState}
+        setState={setGroundState}
+        selectType="sportType"
+      />
+
+      {/* Size */}
       <div>
-        <h2 className="text-lg text-white font-semibold">Sport Type</h2>
+        <h2 className="text-lg text-white font-semibold">Size(m)</h2>
         <Select
-          // onChange={(value) => setState({ ...state, sportType_id: value })}
-          // value={state.sportType_id}
+          onChange={(value) => setGroundState({ ...groundState, size: value })}
+          value={groundState.size}
           className="w-full"
           size="large"
-          placeholder="Select Type"
-        ></Select>
+          placeholder="Select Size"
+          options={[
+            {
+              value: "Full",
+              label: "Full",
+            },
+            {
+              value: "Medium",
+              label: "Medium",
+            },
+            {
+              value: "Junior",
+              label: "Junior",
+            },
+          ]}
+        />
+      </div>
+
+       {/* Surface */}
+       <div>
+        <h2 className="text-lg text-white font-semibold">Surface</h2>
+        <Select
+          onChange={(value) =>
+            setGroundState({ ...groundState, surface: value })
+          }
+          value={groundState.surface}
+          className="w-full"
+          size="large"
+          placeholder="Select Surface"
+          options={[
+            {
+              value: "Grass",
+              label: "Grass",
+            },
+            {
+              value: "Soil",
+              label: "Soil",
+            },
+            {
+              value: "Pitch",
+              label: "Pitch",
+            },
+          ]}
+        />
       </div>
 
       {/* Price */}
-      <div>
-        <h2 className="text-lg text-white font-semibold">Price</h2>
-        <MasterInput
-          // label="Size"
-          type="text"
-          placeholder="BDT"
-          className="master-input w-full"
-          name="price"
-          // value={forgotpassword.email}
-          // onChange={onChange}
-        />
-        {/* <Input
-          type="text"
-          placeholder="BDT"
-          size="large"
-          style={{ fontFamily: "Oswald", letterSpacing: "0.75px" }}
-        /> */}
-      </div>
+      <MasterInput
+        label="Price(BDT)"
+        type="number"
+        placeholder="৳"
+        className="master-input w-full"
+        name="price"
+        value={groundState.price}
+        onChange={(e) =>
+          setGroundState({ ...groundState, price: e.target.value })
+        }
+      />
 
       {/* Status */}
       <div>
         <h2 className="text-lg text-white font-semibold">Status</h2>
         <Select
-          // onChange={(value) => setState({ ...state, category_id: value })}
-          // value={state.category_id}
+          onChange={(value) =>
+            setGroundState({ ...groundState, status: value })
+          }
+          value={groundState.status}
           className="w-full"
           size="large"
-          placeholder="Select Type"
-        >
-          {/* {cateogryList.map((ct) => (
-            <Select.Option key={ct?.id}>{ct?.name}</Select.Option>
-          ))} */}
-        </Select>
+          placeholder="Select Status"
+          options={[
+            {
+              value: "Pending",
+              label: "Pending",
+            },
+            {
+              value: "Granted",
+              label: "Granted",
+            },
+            {
+              value: "Rejected",
+              label: "Rejected",
+            },
+          ]}
+        ></Select>
       </div>
+      {/* <MasterSelect label="Status" placeholder="Select Status" options={['Pending', 'Granted', 'Rejected']} state={groundState} setState={setGroundState} selectType="status" /> */}
 
-      {/* Size */}
-      <div>
-        <h2 className="text-lg text-white font-semibold">Size</h2>
-        <div className="grid grid-cols-2 gap-10 justify-around">
-          <MasterInput
-            // label="Size"
-            type="text"
-            placeholder="Height "
-            className="master-input w-full "
-            name="height"
-            // value={forgotpassword.email}
-            // onChange={onChange}
-          />
-          <MasterInput
-            // label="Size"
-            type="text"
-            placeholder="Width "
-            className="master-input w-full "
-            name="wight"
-            // value={forgotpassword.email}
-            // onChange={onChange}
-          />
-        </div>
-      </div>
 
-      {/* Surface */}
-      <div>
-        <h2 className="text-lg text-white font-semibold">Surface</h2>
-        <Select
-          // onChange={(value) => setState({ ...state, category_id: value })}
-          // value={state.category_id}
-          className="w-full bg-transparent"
-          size="large"
-          placeholder="Select Type"
-          style={{ backgroundColor: "transparent" }}
-        >
-          {/* {cateogryList.map((ct) => (
-            <Select.Option key={ct?.id}>{ct?.name}</Select.Option>
-          ))} */}
-        </Select>
-      </div>
+
+     
 
       {/* Time Duration */}
       <div>
@@ -193,8 +226,8 @@ const GroundForm = ({ state, setState, images = [] }) => {
 
       {/* Location */}
       <h2 className="text-2xl text-white font-semibold col-span-2">Location</h2>
-   
-      {/* Select Zila */}
+
+      {/* Select District */}
       <div className="col-span-1">
         <h2 className="text-lg text-white font-semibold">District</h2>
         <Select
@@ -202,7 +235,7 @@ const GroundForm = ({ state, setState, images = [] }) => {
           value={location.district}
           className="w-full"
           size="large"
-          placeholder="Select Type"
+          placeholder="Select District"
           showSearch
         >
           {districts.map((ds) => (
@@ -219,17 +252,25 @@ const GroundForm = ({ state, setState, images = [] }) => {
           value={location.upazila}
           className="w-full"
           size="large"
-          placeholder="Select Type"
+          placeholder="Select Upazila"
         >
           {filteredUpazilas.map((upz) => (
-            <Select.Option key={upz?.id}>{upz?.name}</Select.Option>
+            <Select.Option key={upz?.name}>{upz?.name}</Select.Option>
           ))}
         </Select>
       </div>
 
+      {/* Address */}
       <div>
         <h2 className="text-lg text-white font-semibold">Address</h2>
-        <TextArea rows={4} />
+        <TextArea
+          rows={4}
+          size="large"
+          onChange={(e) =>
+            setLocation({ ...location, address: e.target.value })
+          }
+          value={location.address}
+        />
       </div>
     </div>
   );
