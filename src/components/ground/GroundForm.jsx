@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { MasterButton, MasterInput } from "../shared";
-import { Divider, Input, Select, TimePicker, Upload } from "antd";
-import { api } from "../../api";
+import React, { useState } from "react";
+import { MasterInput } from "../shared";
+import { Input, Select, TimePicker, Upload } from "antd";
+// import { api } from "../../api";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import districts from "../../utils/geo_bd/districts.json";
@@ -203,9 +203,10 @@ const GroundForm = ({ state, setState, images = [] }) => {
           className="w-full"
           size="large"
           placeholder="Select Type"
+          showSearch
         >
           {districts.map((ds) => (
-            <Select.Option key={ds?.id}>{ds?.name}</Select.Option>
+            <Select.Option key={ds?.name}>{ds?.name}</Select.Option>
           ))}
         </Select>
       </div>
