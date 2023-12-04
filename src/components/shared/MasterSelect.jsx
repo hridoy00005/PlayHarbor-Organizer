@@ -7,16 +7,16 @@ const MasterSelect = ({
   size = "large",
   placeholder,
   options = [],
-  state,
-  setState,
-  selectType = "",
+  onChange,
+  value
+  
 }) => {
   return (
     <div>
       <h2 className="text-lg text-white font-semibold">{label}</h2>
       <Select
-        onChange={(value) => setState({ ...state, selectType: value })}
-        value={state.selectType}
+        onChange={onChange}
+        value={value}
         className={className}
         size={size}
         placeholder={placeholder}

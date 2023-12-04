@@ -1,30 +1,29 @@
 import React, { useState } from "react";
-import { MasterInput, MasterSelect } from "../shared";
+import { MasterButton, MasterInput, MasterSelect } from "../shared";
 import { Input, Select, TimePicker, Upload } from "antd";
-// import { api } from "../../api";
+import { api, createGround } from "../../api";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import districts from "../../utils/geo_bd/districts.json";
 import upazila from "../../utils/geo_bd/upazila.json";
 
-const GroundForm = ({ state, setState, images = [] }) => {
+const GroundForm = () => {
   const { TextArea } = Input;
   const { token } = useSelector((state) => state.auth);
+  // Image State
   const [fileList, setFileList] = useState([]);
+  // Ground State
   const [groundState, setGroundState] = useState({
     name: "",
     sportType: "",
-    images: "",
     // size: "",
-    // surface: "",
+    surface: "",
     openingTime: "",
     closingTime: "",
     price: "",
   });
   // Location State
   const [location, setLocation] = useState({
-    // district: "",
-    // upazila: "",
     address: "",
   });
   //Filtered Upazilas State
@@ -33,24 +32,7 @@ const GroundForm = ({ state, setState, images = [] }) => {
   // Image List Addition
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    fileList.forEach((file) => {
-      images.push(file?.response?.url);
-    });
   };
-
-  // District
-  const handleDistrict = (name) => {
-    setLocation({ ...location, district: name });
-    const { id } = districts.find((ds) => ds.name === name); //Problem...
-    const filteredUpazilas = upazila.filter((up) => up.district_id === id);
-    setFilteredUpazilas(filteredUpazilas);
-  };
-
-  // Upazila
-  const handleUpazila = (id) => {
-    setLocation({ ...location, upazila: id });
-  };
-
   //Time Changing
   const onTimechange = (time) => {
     setGroundState({
@@ -60,14 +42,30 @@ const GroundForm = ({ state, setState, images = [] }) => {
     });
   };
 
+  // Submitting Form
+  const onSubmit = async () => {
+    const images = fileList.map((file) => file?.response?.result?.url);
+    const groundData = { ...groundState, addressData: { ...location }, images };
+    try {
+      const res = await api.post(createGround.createGround, groundData);
+      if(res.success){
+        navigate("/my-grounds");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+const disabled = !fileList || !location.district || !location.upazila || !location.address || !groundState.sportType || !groundState.size || !groundState.surface || !groundState.price || !groundState.openingTime || !groundState.closingTime;
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       {/* Name */}
       <MasterInput
         label="Ground Name"
         type="text"
         placeholder="Name"
-        className="master-input w-full"
+        className="master-input w-full tracking-wider"
         value={groundState.name}
         onChange={(e) =>
           setGroundState({ ...groundState, name: e.target.value })
@@ -79,110 +77,42 @@ const GroundForm = ({ state, setState, images = [] }) => {
         label="Sport Type"
         placeholder="Select Sport Type"
         options={["Cricket", "Football", "Badminton"]}
-        state={groundState}
-        setState={setGroundState}
-        selectType="sportType"
+        onChange={(value) =>
+          setGroundState({ ...groundState, sportType: value })
+        }
+        value={groundState.sportType}
       />
 
       {/* Size */}
-      <div>
-        <h2 className="text-lg text-white font-semibold">Size(m)</h2>
-        <Select
-          onChange={(value) => setGroundState({ ...groundState, size: value })}
-          value={groundState.size}
-          className="w-full"
-          size="large"
-          placeholder="Select Size"
-          options={[
-            {
-              value: "Full",
-              label: "Full",
-            },
-            {
-              value: "Medium",
-              label: "Medium",
-            },
-            {
-              value: "Junior",
-              label: "Junior",
-            },
-          ]}
-        />
-      </div>
+      <MasterSelect
+        label="Size"
+        placeholder="Select Size"
+        options={["Full", "Medium", "Junior"]}
+        onChange={(value) => setGroundState({ ...groundState, size: value })}
+        value={groundState.size}
+      />
 
-       {/* Surface */}
-       <div>
-        <h2 className="text-lg text-white font-semibold">Surface</h2>
-        <Select
-          onChange={(value) =>
-            setGroundState({ ...groundState, surface: value })
-          }
-          value={groundState.surface}
-          className="w-full"
-          size="large"
-          placeholder="Select Surface"
-          options={[
-            {
-              value: "Grass",
-              label: "Grass",
-            },
-            {
-              value: "Soil",
-              label: "Soil",
-            },
-            {
-              value: "Pitch",
-              label: "Pitch",
-            },
-          ]}
-        />
-      </div>
+      {/* Surface */}
+      <MasterSelect
+        label="Surface"
+        placeholder="Select Surface"
+        options={["Grass", "Soil", "Pitch"]}
+        onChange={(value) => setGroundState({ ...groundState, surface: value })}
+        value={groundState.surface}
+      />
 
       {/* Price */}
       <MasterInput
         label="Price(BDT)"
         type="number"
         placeholder="৳"
-        className="master-input w-full"
+        className="master-input w-full tracking-wider"
         name="price"
         value={groundState.price}
         onChange={(e) =>
           setGroundState({ ...groundState, price: e.target.value })
         }
       />
-
-      {/* Status */}
-      <div>
-        <h2 className="text-lg text-white font-semibold">Status</h2>
-        <Select
-          onChange={(value) =>
-            setGroundState({ ...groundState, status: value })
-          }
-          value={groundState.status}
-          className="w-full"
-          size="large"
-          placeholder="Select Status"
-          options={[
-            {
-              value: "Pending",
-              label: "Pending",
-            },
-            {
-              value: "Granted",
-              label: "Granted",
-            },
-            {
-              value: "Rejected",
-              label: "Rejected",
-            },
-          ]}
-        ></Select>
-      </div>
-      {/* <MasterSelect label="Status" placeholder="Select Status" options={['Pending', 'Granted', 'Rejected']} state={groundState} setState={setGroundState} selectType="status" /> */}
-
-
-
-     
 
       {/* Time Duration */}
       <div>
@@ -197,7 +127,7 @@ const GroundForm = ({ state, setState, images = [] }) => {
       </div>
 
       {/* Image Addition */}
-      <div className="  ">
+      <div className="col-span-3">
         <h2 className="text-lg text-white font-semibold">Add Images</h2>
         {fileList.lenght >= 3 ? null : (
           <Upload
@@ -222,42 +152,41 @@ const GroundForm = ({ state, setState, images = [] }) => {
         )}
       </div>
 
-      <div className="h-[1px] bg-white col-span-2"></div>
+      <div className="h-[1px] bg-white col-span-3"></div>
 
       {/* Location */}
-      <h2 className="text-2xl text-white font-semibold col-span-2">Location</h2>
+      <h2 className="text-2xl text-white font-semibold col-span-3">Location</h2>
 
       {/* Select District */}
       <div className="col-span-1">
-        <h2 className="text-lg text-white font-semibold">District</h2>
-        <Select
-          onChange={handleDistrict}
-          value={location.district}
-          className="w-full"
-          size="large"
+        <MasterSelect
+          label="District"
           placeholder="Select District"
-          showSearch
-        >
-          {districts.map((ds) => (
-            <Select.Option key={ds?.name}>{ds?.name}</Select.Option>
-          ))}
-        </Select>
+          options={districts.map((dst) => dst.name)}
+          onChange={(name) => {
+            setLocation({ ...location, district: name });
+            const { id } = districts.find((ds) => ds.name === name);
+            const filteredUpazilas = upazila.filter(
+              (up) => up.district_id === id
+            );
+            console.log(filteredUpazilas);
+            setFilteredUpazilas([...filteredUpazilas.map((upz) => upz.name)]);
+          }}
+          value={location.district}
+        />
       </div>
 
       {/* Select Upazila */}
       <div className="col-span-1">
-        <h2 className="text-lg text-white font-semibold">Upazila</h2>
-        <Select
-          onChange={handleUpazila}
-          value={location.upazila}
-          className="w-full"
-          size="large"
+        <MasterSelect
+          label="Upazila"
           placeholder="Select Upazila"
-        >
-          {filteredUpazilas.map((upz) => (
-            <Select.Option key={upz?.name}>{upz?.name}</Select.Option>
-          ))}
-        </Select>
+          options={filteredUpazilas}
+          onChange={(upazila) => {
+            setLocation({ ...location, upazila: upazila });
+          }}
+          value={location.upazila}
+        />
       </div>
 
       {/* Address */}
@@ -270,6 +199,16 @@ const GroundForm = ({ state, setState, images = [] }) => {
             setLocation({ ...location, address: e.target.value })
           }
           value={location.address}
+        />
+      </div>
+
+      {/* Submit Button */}
+      <div className="col-span-3 text-center">
+        <MasterButton
+          btnText="Create"
+          className="event-btn-primary mt-5 px-10 py-3 tracking-wide"
+          onClick={onSubmit}
+          disabled={disabled}
         />
       </div>
     </div>
