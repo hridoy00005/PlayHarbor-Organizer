@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MasterButton, MasterInput, MasterSelect } from "../shared";
 import { Input, Select, TimePicker, Upload } from "antd";
-import { api, createGround } from "../../api";
+import { Grounds, api,  } from "../../api";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import districts from "../../utils/geo_bd/districts.json";
@@ -47,7 +47,7 @@ const GroundForm = () => {
     const images = fileList.map((file) => file?.response?.result?.url);
     const groundData = { ...groundState, addressData: { ...location }, images };
     try {
-      const res = await api.post(createGround.createGround, groundData);
+      const res = await api.post(Grounds.createGround, groundData);
       if(res.success){
         navigate("/my-grounds");
       }
