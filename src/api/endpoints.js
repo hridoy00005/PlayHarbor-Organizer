@@ -7,14 +7,8 @@ export const auth = {
 
 
 export const Grounds = {
-    getGrounds:"/fetch-ground"
+    getGrounds:"/ground",
+    createGround:"/ground/create-ground",
+    myGrounds:"/ground/my-grounds"
 }
 
-export const createGround = {
-    createGround:"/create-ground"
-}
-
-
-export const sportType = {
-    getSportType:"/sportType"
-}

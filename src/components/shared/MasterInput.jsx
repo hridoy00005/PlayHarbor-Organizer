@@ -5,7 +5,7 @@ const MasterInput = (
   type = "text",
   placeholder,
   className = "",
-  name,
+  name="",
   value,
   onChange,
   disabled = false}
