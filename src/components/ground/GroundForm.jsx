@@ -61,7 +61,7 @@ const GroundForm = ({ state, setState, images = [] }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div>
         <h2 className="text-lg text-white font-semibold">Sport Type</h2>
         <Select
@@ -189,10 +189,10 @@ const GroundForm = ({ state, setState, images = [] }) => {
         )}
       </div>
 
-      <div className="h-[1px] bg-white col-span-2"></div>
+      <div className="h-[1px] bg-white col-span-3"></div>
 
       {/* Location */}
-      <h2 className="text-2xl text-white font-semibold col-span-2">Location</h2>
+      <h2 className="text-2xl text-white font-semibold col-span-3">Location</h2>
    
       {/* Select Zila */}
       <div className="col-span-1">
