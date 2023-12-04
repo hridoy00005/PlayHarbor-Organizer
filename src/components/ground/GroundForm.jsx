@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { MasterButton, MasterInput, MasterSelect } from "../shared";
-import { Input, Select, TimePicker, Upload } from "antd";
+import { Input, TimePicker, Upload } from "antd";
 import { Grounds, api,  } from "../../api";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import districts from "../../utils/geo_bd/districts.json";
 import upazila from "../../utils/geo_bd/upazila.json";
+import { useNavigate } from "react-router-dom";
 
 const GroundForm = () => {
+  const navigate = useNavigate();
   const { TextArea } = Input;
   const { token } = useSelector((state) => state.auth);
   // Image State
@@ -15,9 +17,9 @@ const GroundForm = () => {
   // Ground State
   const [groundState, setGroundState] = useState({
     name: "",
-    sportType: "",
+    // sportType: "",
     // size: "",
-    surface: "",
+    // surface: "",
     openingTime: "",
     closingTime: "",
     price: "",
@@ -120,7 +122,8 @@ const disabled = !fileList || !location.district || !location.upazila || !locati
         <div className="grid grid-cols-1">
           <TimePicker.RangePicker
             size="large"
-            format="HH a"
+            use12Hours 
+            format="h a"
             onChange={onTimechange}
           />
         </div>
@@ -181,6 +184,7 @@ const disabled = !fileList || !location.district || !location.upazila || !locati
       <div className="col-span-1">
         <MasterSelect
           label="Upazila"
+          showSearch
           placeholder="Select Upazila"
           options={filteredUpazilas}
           onChange={(upazila) => {

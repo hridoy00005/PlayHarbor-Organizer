@@ -12,7 +12,7 @@ const MasterInput = (
 ) => {
   return (
     <div>
-      <div><label className="text-base md:text-lg font-semibold">{label}</label></div>
+      <div><label className="text-base md:text-lg text-white font-semibold">{label}</label></div>
       <input
         type={type}
         placeholder={placeholder}

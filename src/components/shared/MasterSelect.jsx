@@ -13,7 +13,7 @@ const MasterSelect = ({
 }) => {
   return (
     <div>
-      <h2 className="text-lg text-white font-semibold">{label}</h2>
+      <h2 className="text-base md:text-lg text-white font-semibold">{label}</h2>
       <Select
         onChange={onChange}
         value={value}
