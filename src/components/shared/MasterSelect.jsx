@@ -12,7 +12,7 @@ const MasterSelect = ({
   showSearch
 }) => {
   return (
-    <div>
+    <div className="col-span-3 md:col-span-1">
       <h2 className="text-base md:text-lg text-white font-semibold">{label}</h2>
       <Select
         onChange={onChange}

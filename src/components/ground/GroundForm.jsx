@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MasterButton, MasterInput, MasterSelect } from "../shared";
 import { Input, TimePicker, Upload } from "antd";
-import { Grounds, api,  } from "../../api";
+import { Grounds, api } from "../../api";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import districts from "../../utils/geo_bd/districts.json";
@@ -50,7 +50,7 @@ const GroundForm = () => {
     const groundData = { ...groundState, addressData: { ...location }, images };
     try {
       const res = await api.post(Grounds.createGround, groundData);
-      if(res.success){
+      if (res.success) {
         navigate("/my-grounds");
       }
     } catch (error) {
@@ -58,21 +58,33 @@ const GroundForm = () => {
     }
   };
 
-const disabled = !fileList || !location.district || !location.upazila || !location.address || !groundState.sportType || !groundState.size || !groundState.surface || !groundState.price || !groundState.openingTime || !groundState.closingTime;
+  const disabled =
+    !fileList ||
+    !location.district ||
+    !location.upazila ||
+    !location.address ||
+    !groundState.sportType ||
+    !groundState.size ||
+    !groundState.surface ||
+    !groundState.price ||
+    !groundState.openingTime ||
+    !groundState.closingTime;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       {/* Name */}
-      <MasterInput
-        label="Ground Name"
-        type="text"
-        placeholder="Name"
-        className="master-input w-full tracking-wider"
-        value={groundState.name}
-        onChange={(e) =>
-          setGroundState({ ...groundState, name: e.target.value })
-        }
-      />
+      <div className="col-span-3 md:col-span-1">
+        <MasterInput
+          label="Ground Name"
+          type="text"
+          placeholder="Name"
+          className="master-input w-full tracking-wider"
+          value={groundState.name}
+          onChange={(e) =>
+            setGroundState({ ...groundState, name: e.target.value })
+          }
+        />
+      </div>
 
       {/* Sport Types */}
       <MasterSelect
@@ -104,29 +116,29 @@ const disabled = !fileList || !location.district || !location.upazila || !locati
       />
 
       {/* Price */}
-      <MasterInput
-        label="Price(BDT)"
-        type="number"
-        placeholder="৳"
-        className="master-input w-full tracking-wider"
-        name="price"
-        value={groundState.price}
-        onChange={(e) =>
-          setGroundState({ ...groundState, price: e.target.value })
-        }
-      />
+      <div className="col-span-3 md:col-span-1">
+        <MasterInput
+          label="Price(BDT)"
+          type="number"
+          placeholder="৳"
+          className="master-input w-full tracking-wider"
+          name="price"
+          value={groundState.price}
+          onChange={(e) =>
+            setGroundState({ ...groundState, price: e.target.value })
+          }
+        />
+      </div>
 
       {/* Time Duration */}
-      <div>
+      <div className="grid col-span-3 md:col-span-1">
         <h2 className="text-lg text-white font-semibold">Time Duration</h2>
-        <div className="grid grid-cols-1">
-          <TimePicker.RangePicker
-            size="large"
-            use12Hours 
-            format="h a"
-            onChange={onTimechange}
-          />
-        </div>
+        <TimePicker.RangePicker
+          size="large"
+          use12Hours
+          format="h a"
+          onChange={onTimechange}
+        />
       </div>
 
       {/* Image Addition */}
@@ -161,7 +173,7 @@ const disabled = !fileList || !location.district || !location.upazila || !locati
       <h2 className="text-2xl text-white font-semibold col-span-3">Location</h2>
 
       {/* Select District */}
-      <div className="col-span-1">
+      <div className="col-span-3 md:col-span-1">
         <MasterSelect
           label="District"
           showSearch
@@ -181,7 +193,7 @@ const disabled = !fileList || !location.district || !location.upazila || !locati
       </div>
 
       {/* Select Upazila */}
-      <div className="col-span-1">
+      <div className="col-span-3 md:col-span-1">
         <MasterSelect
           label="Upazila"
           showSearch
@@ -195,7 +207,7 @@ const disabled = !fileList || !location.district || !location.upazila || !locati
       </div>
 
       {/* Address */}
-      <div>
+      <div className="col-span-3 md:col-span-1">
         <h2 className="text-lg text-white font-semibold">Address</h2>
         <TextArea
           rows={4}
