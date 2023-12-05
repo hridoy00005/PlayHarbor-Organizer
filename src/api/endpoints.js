@@ -6,7 +6,7 @@ export const auth = {
 }
 
 
-export const Grounds = {
+export const groundEndpoint = {
     getGrounds:"/ground",
     createGround:"/ground/create-ground",
     myGrounds:"/ground/my-grounds"

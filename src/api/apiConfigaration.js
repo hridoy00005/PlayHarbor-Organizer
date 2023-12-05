@@ -17,7 +17,7 @@ class ApiConfigaration {
       }
     };
 
-    this.get = async () => {
+    this.get = async (endpoint, params) => {
       try {
         const res = await axios.get(endpoint, {
           params: { ...params },

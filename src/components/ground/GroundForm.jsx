@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MasterButton, MasterInput, MasterSelect } from "../shared";
 import { Input, TimePicker, Upload } from "antd";
-import { Grounds, api } from "../../api";
+import { api, groundEndpoint } from "../../api";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import districts from "../../utils/geo_bd/districts.json";
@@ -17,9 +17,6 @@ const GroundForm = () => {
   // Ground State
   const [groundState, setGroundState] = useState({
     name: "",
-    // sportType: "",
-    // size: "",
-    // surface: "",
     openingTime: "",
     closingTime: "",
     price: "",
@@ -49,7 +46,7 @@ const GroundForm = () => {
     const images = fileList.map((file) => file?.response?.result?.url);
     const groundData = { ...groundState, addressData: { ...location }, images };
     try {
-      const res = await api.post(Grounds.createGround, groundData);
+      const res = await api.post(groundEndpoint.createGround, groundData);
       if (res.success) {
         navigate("/my-grounds");
       }
@@ -59,7 +56,7 @@ const GroundForm = () => {
   };
 
   const disabled =
-    !fileList ||
+    fileList.length===1 ||
     !location.district ||
     !location.upazila ||
     !location.address ||
